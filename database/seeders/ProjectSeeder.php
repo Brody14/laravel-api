@@ -24,7 +24,7 @@ class ProjectSeeder extends Seeder
         $tec_ids = Technology::all()->pluck('id')->all();
         $user_ids = User::all()->pluck('id')->all();
 
-        for ($i = 0; $i < 25; $i++) {
+        for ($i = 0; $i < 100; $i++) {
 
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
