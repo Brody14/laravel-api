@@ -22,7 +22,12 @@ class ProjectController extends Controller
     public function show($slug)
     {
 
-        $project = Project::with('type.projects')->where('slug', $slug)->first();
+        $project = Project::with([
+            'type.projects' => function (Builder $query) {
+                $query->orderBy('created_at', 'desc')->limit(3);
+            }
+
+        ])->where('slug', $slug)->first();
 
         return response()->json([
             'success' => true,
