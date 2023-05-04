@@ -29,9 +29,16 @@ class ProjectController extends Controller
 
         ])->where('slug', $slug)->first();
 
-        return response()->json([
-            'success' => true,
-            'project' => $project
-        ]);
+        if ($project) {
+            return response()->json([
+                'success' => true,
+                'project' => $project
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Not Found',
+            ]);
+        }
     }
 }
