@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -21,7 +22,7 @@ class ProjectController extends Controller
     public function show($slug)
     {
 
-        $project = Project::where('slug', $slug)->first();
+        $project = Project::with('type.projects')->where('slug', $slug)->first();
 
         return response()->json([
             'success' => true,
