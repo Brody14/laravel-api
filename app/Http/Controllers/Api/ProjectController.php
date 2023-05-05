@@ -23,10 +23,9 @@ class ProjectController extends Controller
     {
 
         $project = Project::with([
-            'type.projects' => function (Builder $query) {
-                $query->orderBy('created_at', 'desc')->limit(3);
+            'type.projects' => function (Builder $query) use ($slug) {
+                $query->where('slug', '!=', $slug)->orderBy('created_at', 'desc')->limit(3);
             }
-
         ])->where('slug', $slug)->first();
 
         if ($project) {
