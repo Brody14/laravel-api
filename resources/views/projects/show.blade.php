@@ -21,8 +21,11 @@
                 </button>
               </form>
               @endif
-            </div>
+          </div>
           <div class="col">
+              <figure>
+                <img src="{{ asset('storage/' . $project->cover)}}" alt="" width="150">
+              </figure>
               <h3 class="project_title">Title: {{$project->title}}</h3>
               
              <div class="d-flex gap-2 align-items-center mb-4">

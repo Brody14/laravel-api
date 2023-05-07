@@ -7,9 +7,19 @@
     </div>
 
     <div class="container">
-    <form action="{{ route('projects.store')}}" method="POST">
+    <form action="{{ route('projects.store')}}" method="POST" enctype="multipart/form-data">
 
         @csrf
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+            @error('image')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
 
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>

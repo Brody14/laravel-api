@@ -19,7 +19,7 @@
             <thead>
               <tr>
                 <th scope="col">Title</th>
-                <th scope="col">Description</th>
+                <th scope="col">Cover</th>
                 <th scope="col">Url</th>
                 <th scope="col">Deleted</th>
                 <th scope="col">Actions</th>
@@ -35,7 +35,7 @@
                       </p>
                      
                     </td>
-                    <td>{{ $project->description }}</td>
+                    <td><img src="{{ asset('storage/' . $project->cover)}}" alt="" width="50"></td>
                     <td> <a href="{{ $project->url }}">Visit</a></td>
                     <td> {{ $project->trashed() ? $project->deleted_at->format('d/m/Y') : ''}}</td>
                     <td>

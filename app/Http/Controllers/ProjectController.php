@@ -9,6 +9,7 @@ use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -63,6 +64,11 @@ class ProjectController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
         $validated['user_id'] = Auth::id();
 
+        if ($request->hasFile('image')) {
+            $image_path = Storage::put('uploads', $validated['image']);
+            $validated['cover'] = $image_path;
+        }
+
         $new_project = Project::create($validated);
 
         if (isset($validated['technologies'])) {
@@ -113,6 +119,15 @@ class ProjectController extends Controller
             $validated['slug'] =  Str::slug($validated['title']);
         }
 
+        if ($request->hasFile('image')) {
+            $image_path = Storage::put('uploads', $validated['image']);
+            $validated['cover'] = $image_path;
+
+            if ($project->cover && Storage::exists('image')) {
+                Storage::delete($project->cover);
+            }
+        }
+
         $project->update($validated);
 
         if (isset($validated['technologies'])) {
@@ -143,6 +158,11 @@ class ProjectController extends Controller
     {
 
         if ($project->trashed()) {
+
+            // if ($project->cover && Storage::exists('image')) {
+            //     Storage::delete($project->cover);
+            // }
+
             $project->forceDelete();
             return to_route('projects.index')->with('message', 'Project deleted');
         }

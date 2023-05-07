@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +20,8 @@ class Project extends Model
         'customer',
         'url',
         'type_id',
-        'user_id'
+        'user_id',
+        'cover'
     ];
 
     public function type()
@@ -46,4 +48,13 @@ class Project extends Model
     {
         return $this->type->projects()->where('id', '!=', $this->id)->get();
     }
+
+    protected function coverPath(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => asset('storage/' . $attributes['cover'])
+        );
+    }
+
+    protected $appends = ['cover_path'];
 }
